@@ -20,7 +20,7 @@ module.exports = {
       },
       {
         test: /\.pug$/,
-        loader: 'pug-html-loader'
+        loaders: ['raw-loader', 'pug-html-loader']
       }
     ]
   },
