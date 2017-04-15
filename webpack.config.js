@@ -1,6 +1,7 @@
 var path = require("path");
 
 var webpack = require("webpack");
+var copyWebpackPlugin = require('copy-webpack-plugin');
 var htmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
@@ -16,15 +17,26 @@ module.exports = {
     rules: [
       {
         test: /\.ts$/,
-        loaders: ['awesome-typescript-loader', 'angular2-template-loader']
+        use: ['awesome-typescript-loader', 'angular2-template-loader']
       },
       {
         test: /\.pug$/,
-        loaders: ['raw-loader', 'pug-html-loader']
+        use: ['html-loader', 'pug-html-loader?exports=false']
+      },
+      {
+        test: /\.scss$/,
+        use: ['style-loader', 'css-loader', 'sass-loader']
+      },
+      {
+        test: /\.(jpg|png|gif)$/,
+        use: 'file-loader'
       }
     ]
   },
   plugins: [
+    new copyWebpackPlugin([
+       { from: 'src/assets', to: 'assets' },
+    ]),
     new htmlWebpackPlugin({
       template: './src/index.html'
     }),
